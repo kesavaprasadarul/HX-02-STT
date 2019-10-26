@@ -11,7 +11,11 @@ This is an simple experiment to control output devices wirelessly using a phone 
 5. Stepper Motor / PWM-supported LED
 
 #### Connection Guide
-
+<style>
+.tablelines table, .tablelines td, .tablelines th {
+        border: 1px solid black;
+        }
+</style>
 ##### I/O Connection Map
 | IO Device                                             | Pin Number           |
 |-------------------------------------------------------|----------------------| 
@@ -19,12 +23,14 @@ This is an simple experiment to control output devices wirelessly using a phone 
 | Motor/PWM-supported LED                               | 6                    |
 | HC-05                                                 | TXD - 0; RXD - 1     |
 | (Optional; not included in schematic diagram) LED     | 13                   |
+{: .tablelines}
 
 ##### Power Requirements
 | IO Device        | Supported Voltages          |
 | -----------------|-----------------------------| 
 | HC-05            | 3.6V / 5V                   |
 | LED	           | 3.3V+                       |
+{: .tablelines}
 
 ##### Schematic
 ![Image](IOTBT_SCH.png)
