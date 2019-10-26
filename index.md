@@ -1,37 +1,98 @@
-## Welcome to GitHub Pages
+## Voice-controlled Arduino I/O over Bluetooth Serial
 
-You can use the [editor on GitHub](https://github.com/kesavaprasadarul/kesava89.github.io/edit/master/index.md) to maintain and preview the content for your website in Markdown files.
+#### Introduction
+This is an simple experiment to control output devices wirelessly using a phone through voice. It works through a general bluetooth serial interface. Ideally, this experiment should work over any bluetooth module that supports serial and micro-controller that supports software-serial, however this guide shall be focused for the parts listed below.
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+#### Components Required
+1. Arduino Uno
+2. HC05 Bluetooth Module
+3. LEDs
+4. Compatible Resistors
+5. Stepper Motor / PWM-supported LED
 
-### Markdown
+#### Connection Guide
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+##### I/O Connection Map
+| IO Device        | Pin Number           |
+| ------------- |:-------------:| 
+| LED     | 5 |
+| Motor/PWM-supported LED     | 6      |
+| HC-05| TXD - 0; RXD - 1|
+| (Optional; not included in schematic diagram) LED| 13     |
 
-```markdown
-Syntax highlighted code block
+##### Power Requirements
+| IO Device        | Supported Voltages          |
+| ------------- |:-------------:| 
+| HC-05     | 3.6V / 5V |
+| LED	| 3.3V+|
 
-# Header 1
-## Header 2
-### Header 3
+##### Schematic
+![Image](IOTBT_SCH.png)
 
-- Bulleted
-- List
+#### Arduino Code
+```
+//Adapted from https://electronicshobbyists.com/arduino-pwm-tutorial/
+#include <SoftwareSerial.h>
 
-1. Numbered
-2. List
+String value;
+int TxD = 1;
+int RxD = 0;
+int servoposition;
+SoftwareSerial bluetooth(RxD, TxD);
+void setup() {
+        pinMode(13, OUTPUT);
+        pinMode(5, OUTPUT);
+        pinMode(6, OUTPUT);
+        Serial.begin(9600); // start serial communication at 9600bps
+        bluetooth.begin(9600);
+}
+void loop() {
+        Serial.println(value);
+        if (bluetooth.available()) {
+                value = bluetooth.readString();
+                value.trim();
+                if (value == "all LED turn on") {
+                        digitalWrite(13, HIGH);
+                        digitalWrite(5, HIGH);
+                }
+                if (value == "no speed") {
+                        analogWrite(6, 0);
+                }
 
-**Bold** and _Italic_ and `Code` text
+                if (value == "speed 1") {
+                        analogWrite(6, 75);
+                }
 
-[Link](url) and ![Image](src)
+                if (value == "Speed 2") {
+                        analogWrite(6, 150);
+                }
+
+                if (value == "Speed 3") {
+                        analogWrite(6, 255);
+                }
+                if (value == "all LED turn off") {
+                        digitalWrite(13, LOW);
+                        digitalWrite(5, LOW);
+                }
+                if (value == "turn on yellow LED") {
+                        digitalWrite(13, HIGH);
+                }
+                if (value == "turn on Red LED") {
+                        digitalWrite(5, HIGH);
+                }
+                if (value == "turn off yellow LED") {
+                        digitalWrite(13, LOW);
+                }
+                if (value == "turn off red LED") {
+                        digitalWrite(5, LOW);
+                }
+        }
+        delay(500);
+}
+
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+#### Voice over Bluetooth on phone
 
-### Jekyll Themes
+To simplify actions, please download the [Arduino Bluetooth Voice Controller](https://play.google.com/store/apps/details?id=appinventor.ai_nitinpandit_00.Arduino_bluetooth_voice_controller&hl=en_IN) app from the play store. Once connected to the HC-05 module, the app just transmits all the text over serial with which the arduino can process information.
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/kesavaprasadarul/kesava89.github.io/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
-
-### Support or Contact
-
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
