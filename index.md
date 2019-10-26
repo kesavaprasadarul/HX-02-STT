@@ -13,24 +13,24 @@ This is an simple experiment to control output devices wirelessly using a phone 
 #### Connection Guide
 
 ##### I/O Connection Map
-| IO Device        | Pin Number           |
-| ------------- |:-------------:| 
-| LED     | 5 |
-| Motor/PWM-supported LED     | 6      |
-| HC-05| TXD - 0; RXD - 1|
-| (Optional; not included in schematic diagram) LED| 13     |
+| IO Device                                             | Pin Number           |
+|-------------------------------------------------------|----------------------| 
+| LED                                                   | 5                    |
+| Motor/PWM-supported LED                               | 6                    |
+| HC-05                                                 | TXD - 0; RXD - 1     |
+| (Optional; not included in schematic diagram) LED     | 13                   |
 
 ##### Power Requirements
 | IO Device        | Supported Voltages          |
-| ------------- |:-------------:| 
-| HC-05     | 3.6V / 5V |
-| LED	| 3.3V+|
+| -----------------|-----------------------------| 
+| HC-05            | 3.6V / 5V                   |
+| LED	           | 3.3V+                       |
 
 ##### Schematic
 ![Image](IOTBT_SCH.png)
 
 #### Arduino Code
-```
+```c
 //Adapted from https://electronicshobbyists.com/arduino-pwm-tutorial/
 #include <SoftwareSerial.h>
 
