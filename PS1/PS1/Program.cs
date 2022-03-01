@@ -25,6 +25,10 @@ namespace PS1
 
                 Do note that there more than one way to do all of these steps, 
                 it is possible to do something as small as 1 line, and several 30 lines :)
+
+                Functionally, the code will read PS1Q.csv which is filled with several cells of data with vowels and numbers.
+                Your code will remove all these vowels and numbers from that csv file, then save it in a different name.
+                To verify if your code is working, compare your output file with PS1Q_SampleOutExpected.csv - it should be identical!
             */
         }
 
